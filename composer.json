@@ -1,0 +1,10 @@
+{
+    "name": "phrc/php-web",
+    "description": "Projeto web com php.",
+    "autoload": {
+        "psr-4": {
+            "Phrc\\PhpWeb\\": "src/"
+        }
+    },
+    "require": {}
+}
