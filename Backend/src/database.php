@@ -13,9 +13,8 @@
     $port = $_ENV['PGPORT'];
 
     try {
-        // String de conexão (DSN - Data Source Name)
         $dsn = "pgsql:host={$host};port={$port};dbname={$db_name};user={$user};password={$password}";
-        
+
         $pdo = new PDO($dsn);
         
         // Define o modo de erro para lançar exceções em caso de falha
@@ -24,7 +23,7 @@
         echo "Conexão com o banco de dados estabelecida com sucesso!";
 
     } catch (PDOException $e) {
-        // Se a conexão falhar, exibe a mensagem de erro
+        // Exibe a mensagem de erro
         die("Erro na conexão com o banco de dados: " . $e->getMessage());
     }
 

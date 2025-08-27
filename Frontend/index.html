@@ -17,15 +17,15 @@
 
 <body>
     <!-- Navigation -->
-    <header class="header-container">
+    <header class="header-container" id="header">
         <nav class="nav-container">
-            <a class="logo" href="" style="text-decoration: none;">
+            <a class="logo" style="text-decoration: none;">
                 <i class="bi bi-book-half"></i>
                 <span>Livrotelas</span>
             </a>
 
             <ul class="navbar" style="list-style-type: none;">
-                <li><a href="#home" class="nav-link active">Início</a></li>
+                <li><a href="" class="nav-link active">Início</a></li>
                 <li><a href="#categories" class="nav-link">Categorias</a></li>
                 <li><a href="#library" class="nav-link">Biblioteca</a></li>
                 <li><a href="#stats" class="nav-link">Estatísticas</a></li>
@@ -35,7 +35,8 @@
                 <button class="btn-primary">
                     <i class="bi bi-person-fill"></i>
                     <span>ENTRAR</span>
-                    <span>CADASTRAR</span>
+                    <!--
+                    <span>CADASTRAR</span>-->
                 </button>
             </div>
         </nav>
@@ -45,16 +46,39 @@
         <!-- Introduction -->
         <section class="first-container" id="home">
             <div class="first-content">
-                <h1 class="intro-title">Descubra Livros de Todos os Tipos!</h1>
-                <p class="intro-subtitle">Uma biblioteca em sua tela</p>
+                <h1 class="intro-title">Descubra Livros de Todos os Tipos</h1>
+                <p class="intro-subtitle">Sua próxima aventura literária aqui !</p>
             </div>
-            <video autoplay muted loop class="background-video">
+            <video autoplay muted loop playsinline poster="/Frontend/background-image.png" class="background-video">
                 <source src="/Frontend/background-video.mp4" type="video/mp4">
             </video>
         </section>
+
+        <section class="second-container">
+
+        </section>
     </main>
 
+    
     <footer></footer>
+
+    <script>
+        //Resolvendo a scrollbar
+        const main = document.querySelector('main');
+        let timeout;
+        main.classList.add('scrollbar-oculta');
+
+        main.addEventListener('scroll', () => {
+            //Torna a scrollbar visível
+            main.classList.remove('scrollbar-oculta');
+
+            //Limpa o temporizador
+            clearTimeout(timeout);
+
+            //Scrollbar vai ficar transparente depois de 1.5 segundos sem rolar
+            timeout = setTimeout(() => {main.classList.add('scrollbar-oculta');}, 1500);
+        });
+    </script>
 </body>
 
 </html>
