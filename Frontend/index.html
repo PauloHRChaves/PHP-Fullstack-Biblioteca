@@ -13,6 +13,11 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 
+    <style>
+        
+
+    </style>
+
 </head>
 
 <body>
@@ -50,8 +55,20 @@
                 <p class="intro-subtitle">Sua próxima aventura literária aqui !</p>
             </div>
             <video autoplay muted loop playsinline poster="/Frontend/background-image.png" class="background-video">
-                <source src="/Frontend/background-video.mp4" type="video/mp4">
+                <!--<source src="/Frontend/background-video.mp4" type="video/mp4">-->
             </video>
+
+            <div class="search-container">
+                <div class="search-bar">
+                    <i class="bi bi-search"></i>
+                    <input type="text" id="searchInput" placeholder="Buscar livros...">
+                    <button class="search-btn" id="searchBtn" style="background: none; border: none; font-size: 2rem;">
+                        <i class="bi bi-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+
         </section>
 
         <section class="second-container">
@@ -63,7 +80,7 @@
     <footer></footer>
 
     <script>
-        //Resolvendo a scrollbar
+        //Scrollbar Oculto
         const main = document.querySelector('main');
         let timeout;
         main.classList.add('scrollbar-oculta');
@@ -75,7 +92,6 @@
             //Limpa o temporizador
             clearTimeout(timeout);
 
-            //Scrollbar vai ficar transparente depois de 1.5 segundos sem rolar
             timeout = setTimeout(() => {main.classList.add('scrollbar-oculta');}, 1500);
         });
     </script>

@@ -1,16 +1,18 @@
 :root {
     --black:#000000;
-    --dark-background:#121821;
-    --background: #1f2937;
-    --second-background: #1f2937;
-    --border: #4b5563;
+    --dark-background:#021720;
+    --background: #0F141B;
+    --second-background: #303F55;
+    --border: #2d2d2dce;
     --white: #ffffff;
 
-    --orange: #ea580c;
-    --primary: #1a87e7;
-    --secundary: #44bce4;
+    --orange: #EB5A0C;
+    --second-orange: #eb870c;
+    --primary: #0981B0;
+    --secundary: #0CABEB;
 
     --radius: 0.5rem;
+    --header-height: 80px;
 }
 
 * {
@@ -26,11 +28,30 @@ html {
 body {
     font-family: "Open Sans", sans-serif;
     line-height: 1.6;
-    overflow: hidden;
-    height: 100vh;
+    background: linear-gradient(290deg, var(--background) 0%, var(--second-background) 180%);
     display: flex;
     flex-direction: column;
-    background: linear-gradient(135deg, var(--background) 30%, var(--second-background) 180%);
+    height: 100vh;
+    overflow: hidden;
+}
+
+main {
+    flex-grow: 1; 
+    margin-top: var(--header-height);
+    overflow-y: auto;
+    padding: 0 0 0 0.5rem;
+}
+/* Scrollbar*/
+main::-webkit-scrollbar {
+    width: 0.5rem;
+}
+main::-webkit-scrollbar-thumb {
+    background: rgba(180, 180, 180, 0.54);
+    border-radius: var(--radius);
+    transition: background 0.3s ease-out;
+}
+.scrollbar-oculta::-webkit-scrollbar-thumb {
+    background: transparent;
 }
 
 /* Navigation */
@@ -42,6 +63,7 @@ body {
     background: var(--dark-background);
     backdrop-filter: blur(10px);
     z-index: 5;
+    border-bottom: 2px solid var(--border);
 
     .nav-container {
         display: flex;
@@ -125,27 +147,33 @@ body {
 
 }
 
+.first-container, 
+.second-container {
+    transform: translateZ(0);
+    will-change: transform;
+}
+
 /* Introduction */
 .first-container {
-    min-height: 80dvh;
-    height: fit-content;
+    min-height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 8rem 2rem 4rem;
+    padding: 2rem 4rem;
     text-align: center;
     border-radius: var(--radius);
-
+    position: relative;
 
     .first-content {
         max-width: 40dvw;
+        z-index: 1;
     }
     .intro-title {
         font-family: "Work Sans", sans-serif;
         font-weight: 600;
         font-size: clamp(2.5rem, 4vw, 8vw);
         font-weight: 700;
-        margin-bottom: 1rem;
         background: linear-gradient(135deg, var(--white) 30%, var(--secundary) 180%);
         -webkit-background-clip: text;
         background-clip: text;
@@ -159,13 +187,60 @@ body {
         color: var(--white);
         margin-bottom: 3rem;
     }
+
+    /* Search Bar */
+    .search-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        
+        .search-bar {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--white);
+            border-radius: var(--radius);
+            padding: 0.5rem 1rem;
+            max-width: 50%;
+            min-width: 30%;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+    
+        .search-bar:focus-within {
+            border-color: var(--white);
+            background-color: #ffffff15;
+        }
+    
+        .search-bar i {
+            color: var(--white);
+        }
+        .bi-search{margin-right: 1rem;}
+        .bi-arrow-right{margin-left: 1rem; cursor: pointer;}
+
+        .search-bar input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--second-orange);
+            text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.529);
+            font-size: clamp(1rem, 1vw, 2rem);
+        }
+    
+        .search-bar input::placeholder {
+            color: var(--white);
+            font-weight: 200;
+            text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.529);
+        }
+    }
+
     
 }
 /* Background Animado*/
 .first-container{
     position: relative;
+    min-height: 70dvh;
     overflow: hidden;
-    height: 60dvh;
   
     .background-video {
         position: absolute;
@@ -179,30 +254,7 @@ body {
     }
 }
 
+
 .second-container{
-    height: 70dvh;
-}
-
-/* Scrollbar*/
-main {
-    flex: 1;
-    margin-top: 80px;
-    overflow-y: auto;
-
-    padding: 0.3rem 0.1rem 0 0.6rem;
-}
-
-main::-webkit-scrollbar {
-    width: 0.5rem;
-}
-
-main::-webkit-scrollbar-thumb {
-    background: rgba(180, 180, 180, 0.54);
-    border-radius: var(--radius);
-    transition: background 0.3s ease-out;
-
-}
-
-.scrollbar-oculta::-webkit-scrollbar-thumb {
-    background: transparent;
+    min-height: 100vh;
 }
