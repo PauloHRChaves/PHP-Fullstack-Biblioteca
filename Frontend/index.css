@@ -24,6 +24,7 @@ main::-webkit-scrollbar-thumb {
     will-change: transform;
 }
 
+
 /* Introduction */
 .first-container {
     min-height: 100vh;
