@@ -2,6 +2,8 @@
 
 require __DIR__ . '/../src/database.php';
 
+date_default_timezone_set('America/Sao_Paulo');
+
 try {
     // Define a query SQL para criar a tabela USERS
     $sql = "

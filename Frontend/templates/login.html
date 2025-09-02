@@ -135,14 +135,14 @@
                     background-color: transparent;
                     border: 1px solid var(--border);
                     border-radius: var(--radius);
+                    width: 100%;
                 }
         
-                /*
-                .input:valid ~ .label,.input:focus ~ .label{
-                    padding-left: 0.2rem;
-                    transform: translateY(-2.5rem);
-                    color: #d4d6dd;
-                }*/
+
+                .input:valid, .input:focus{
+                    color: var(--black);
+                    background-color: #ebecee
+                }
             }
 
             .forgot {
@@ -166,6 +166,7 @@
                 border-radius: 0.375rem;
                 font-weight: 600;
                 cursor: pointer;
+                margin-top: 2rem;
             }
 
             .social-message {
@@ -227,6 +228,16 @@
             display: none !important;
         }*/
 
+        .message-box{
+            margin: 2rem 0;
+            color: #ffffff;
+            justify-self: center;
+            font-size: clamp(1rem, 1vw, 2rem);
+            font-weight: 500;
+
+            border-bottom: 1px solid red;
+        }
+
     </style>
 
 </head>
@@ -251,12 +262,12 @@
                 <form class="form">
                     <div class="container">
                         <label class="label" for="Email">Email</label>
-                        <input required="" type="text" name="text" autocomplete="email" class="input" id="Email">
+                        <input required type="text" name="email" autocomplete="email" class="input" id="Email">
                     </div>
 
                     <div class="container">
                         <label class="label" for="password">Senha</label>
-                        <input required="" type="password" name="password" class="input" id="password">
+                        <input required type="password" name="password" class="input" id="password">
 
                         <div class="forgot">
                             <a rel="noopener noreferrer" href="#">Esqueceu a senha ?</a>
@@ -299,18 +310,24 @@
                 <form class="form">
                     <div class="container">
                         <label class="label" for="Email">Email</label>
-                        <input required="" type="text" name="text" autocomplete="email" class="input" id="Email">
+                        <input required type="text" name="text" autocomplete="email" class="input" id="Email" placeholder="example@gmail.com">
                     </div>
                     <div class="container">
                         <label class="label" for="username">Username</label>
-                        <input required="" type="text" name="username" autocomplete="username" class="input" id="username">
+                        <input required type="text" name="username" autocomplete="username" class="input" id="username">
                     </div>
                     <div class="container">
                         <label class="label" for="password">Senha</label>
-                        <input required="" type="password" name="password" class="input" id="password">
+                        <input required type="password" name="password" class="input" id="password">
+                    </div>
+                    <div class="container">
+                        <label class="label" for="confirm_password">Confirmar Senha</label>
+                        <input required type="password" name="confirm_password" class="input" id="confirm_password">
                     </div>
 
-                    <button class="sign" style="margin-top: 3rem;">Cadastrar</button>
+                    <div id="message-container"></div>
+
+                    <button class="sign">Cadastrar</button>
                 </form>
 
                 <div class="social-message">
@@ -340,6 +357,7 @@
         </section>
     </main>
 
+    <!--Teste trocando Registro e Login-->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const loginSection = document.getElementById('login-section');
@@ -362,6 +380,7 @@
                 mainContainer.appendChild(loginSection);
             });
         });
+        
         /*
         document.addEventListener('DOMContentLoaded', () => {
             const loginSection = document.getElementById('login-section');
@@ -385,6 +404,71 @@
             });
         });*/
     </script>
+    
+    <!--Validação de Cadastro-->
+    <script>
+        const registerForm = document.querySelector("#register-section .form");
+        const messageContainer = document.getElementById('message-container');
+
+        // Função para mostrar mensagens
+        function showMessage(message, type) {
+            messageContainer.textContent = message;
+            messageContainer.className = `message-box ${type}`;
+            messageContainer.style.display = 'block';
+        }
+
+        registerForm.addEventListener('submit', async (e) => { e.preventDefault();
+            messageContainer.style.display = 'none';
+
+            const email = document.getElementById('Email').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+
+            if (password !== confirmPassword) {
+                showMessage('As senhas não coincidem!', 'error');
+                return;
+            }
+
+            if (username.length < 4) {
+                showMessage('O nome de usuário deve ter no mínimo 4 caracteres.', 'error');
+                return;
+            }
+
+            if (password.length < 8) {
+                showMessage('A senha deve ter no mínimo 8 caracteres.', 'error');
+                return;
+            }
+
+            const formData = new URLSearchParams();
+            formData.append('email', email);
+            formData.append('username', username);
+            formData.append('password', password);
+
+            try {
+                const response = await fetch('http://localhost:8000/Backend/src/register.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert('CADASTRO REALIZADO!', 'success');
+                    setTimeout(() => {window.location.href = '/Frontend/index.html';}, 1500);
+                    return;
+                } else {
+                    // Mensagem de erro que vem do PHP
+                    showMessage(result.message, 'error');
+                }
+
+            } catch (error) {
+                console.error('Erro na requisição:', error);
+                showMessage('Erro ao tentar conectar com o servidor. Tente novamente.', 'error');
+            }
+        });
+    </script>
+
 </body>
 
 </html>
