@@ -81,11 +81,9 @@
         main{
             display: flex;
             justify-content: center;
-            padding: 1rem 0;
 
             .main-container{
                 width: clamp(600px, 45vw, 1600px);
-                padding: 0.6rem;
                 backdrop-filter: blur(8rem);
                 border-radius: 1rem;
                 box-shadow: 2px 0px 10px #0000003c;
@@ -108,7 +106,7 @@
                 display: flex;
                 flex-direction: column;
                 position: relative;
-                margin-top: 2rem;   
+                margin-top: 1.5rem;   
                 
                 .label{
                     color: #c0c3cc;
@@ -166,13 +164,14 @@
                 border-radius: 0.375rem;
                 font-weight: 600;
                 cursor: pointer;
-                margin-top: 2rem;
+                margin-top: 1rem;
             }
 
             .social-message {
                 display: flex;
                 align-items: center;
                 margin-top: 0.8rem;
+                margin-bottom: 0.8rem;
                 
                 .line {
                     height: 2px;
@@ -193,10 +192,9 @@
                 display: flex;
                 justify-content: center;
                 gap: 1rem;
-                margin-top: 1rem;
                 
                 .icon {
-                    padding: 0.75rem;
+                    padding: var(--radius);
                     border: none;
                     background: transparent;
                     cursor: pointer;
@@ -213,7 +211,7 @@
                 text-align: center;
                 font-size: 0.9rem;
                 color: #9ca3af;
-                margin-top: 1rem;
+                margin-top: 0.8rem;
             }
 
             a {
@@ -230,12 +228,10 @@
 
         .message-box{
             margin: 2rem 0;
-            color: #ffffff;
+            color: #ff0000;
             justify-self: center;
             font-size: clamp(1rem, 1vw, 2rem);
-            font-weight: 500;
-
-            border-bottom: 1px solid red;
+            font-weight: 600;
         }
 
     </style>
@@ -264,7 +260,6 @@
                         <label class="label" for="Email">Email</label>
                         <input required type="text" name="email" autocomplete="email" class="input" id="Email">
                     </div>
-
                     <div class="container">
                         <label class="label" for="password">Senha</label>
                         <input required type="password" name="password" class="input" id="password">
@@ -274,13 +269,15 @@
                         </div>
                     </div>
 
+                    <div id="login-message-container"></div>
+
                     <button class="sign">Entrar</button>
                 </form>
 
                 <div class="social-message">
                     <div class="line"></div>
                     <p class="message">ou</p>
-                    <d class="line"></d>
+                    <div class="line"></div>
                 </div>
 
                 <div class="social-icons">
@@ -309,23 +306,23 @@
 
                 <form class="form">
                     <div class="container">
-                        <label class="label" for="Email">Email</label>
-                        <input required type="text" name="text" autocomplete="email" class="input" id="Email" placeholder="example@gmail.com">
+                        <label class="label" for="register-Email">Email</label>
+                        <input required type="text" name="text" autocomplete="email" class="input" id="register-Email" placeholder="example@gmail.com">
                     </div>
                     <div class="container">
                         <label class="label" for="username">Username</label>
                         <input required type="text" name="username" autocomplete="username" class="input" id="username">
                     </div>
                     <div class="container">
-                        <label class="label" for="password">Senha</label>
-                        <input required type="password" name="password" class="input" id="password">
+                        <label class="label" for="register-password">Senha</label>
+                        <input required type="password" name="password" class="input" id="register-password">
                     </div>
                     <div class="container">
                         <label class="label" for="confirm_password">Confirmar Senha</label>
                         <input required type="password" name="confirm_password" class="input" id="confirm_password">
                     </div>
 
-                    <div id="message-container"></div>
+                    <div id="register-message-container"></div>
 
                     <button class="sign">Cadastrar</button>
                 </form>
@@ -357,8 +354,9 @@
         </section>
     </main>
 
-    <!--Teste trocando Registro e Login-->
+    <!--Trocando Cadastrar e Login-->
     <script>
+        //Remove todo o conteudo de cadastro ou login da pagina
         document.addEventListener('DOMContentLoaded', () => {
             const loginSection = document.getElementById('login-section');
             const registerSection = document.getElementById('register-section');
@@ -381,6 +379,7 @@
             });
         });
         
+        //Oculta todo o conteudo de cadastro ou login da pagina
         /*
         document.addEventListener('DOMContentLoaded', () => {
             const loginSection = document.getElementById('login-section');
@@ -388,9 +387,6 @@
             const switchToRegisterLink = document.getElementById('switch-to-register');
             const switchToLoginLink = document.getElementById('switch-to-login');
             
-            // Não precisa mais remover a seção no início.
-            // Ela já está escondida pela classe 'hidden' no HTML.
-
             switchToRegisterLink.addEventListener('click', (e) => {
                 e.preventDefault();
                 loginSection.classList.add('hidden');
@@ -407,43 +403,93 @@
     
     <!--Validação de Cadastro-->
     <script>
-        const registerForm = document.querySelector("#register-section .form");
-        const messageContainer = document.getElementById('message-container');
-
         // Função para mostrar mensagens
-        function showMessage(message, type) {
-            messageContainer.textContent = message;
-            messageContainer.className = `message-box ${type}`;
-            messageContainer.style.display = 'block';
+        const logmessageContainer = document.getElementById('login-message-container');
+        function showMessagelog(message, type) {
+            logmessageContainer.textContent = message;
+            logmessageContainer.className = `message-box ${type}`;
+            logmessageContainer.style.display = 'block';
         }
 
-        registerForm.addEventListener('submit', async (e) => { e.preventDefault();
-            messageContainer.style.display = 'none';
+
+        //verficar o formulario de login !
+        const loginform = document.querySelector('#login-section .form');
+        loginform.addEventListener('submit', async (e) => { e.preventDefault();
+            logmessageContainer.style.display = 'none';
 
             const email = document.getElementById('Email').value;
-            const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
+
+            //Erros
+            if(!password || !email){
+                showMessagelog('Por favor, preencha todos os campos.','error');
+                return;
+            }
+            
+            const formData = new URLSearchParams();
+            formData.append('email', email);
+            formData.append('password', password);
+
+            try{
+                const response = await fetch('http://localhost:8000/Backend/src/login.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    window.location.href = '/Frontend/templates/profile.html';
+                } else {
+                    showMessagelog(result.message, 'error');
+                }
+            
+            } catch (error) {
+                console.error('Erro na requisição:', error);
+                showMessagelog('Erro ao tentar conectar com o servidor. Tente novamente.', 'error');
+            }
+
+        });
+
+        const regmessageContainer = document.getElementById('register-message-container');
+        function showMessagereg(message, type) {
+            regmessageContainer.textContent = message;
+            regmessageContainer.className = `message-box ${type}`;
+            regmessageContainer.style.display = 'block';
+        }
+
+        const registerForm = document.querySelector("#register-section .form");
+        registerForm.addEventListener('submit', async (e) => { e.preventDefault();
+            regmessageContainer.style.display = 'none';
+
+            const email = document.getElementById('register-Email').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('register-password').value;
             const confirmPassword = document.getElementById('confirm_password').value;
 
+            //Erros
+            if(!password || !email || !username || !confirmPassword){
+                showMessagereg('Por favor, preencha todos os campos.','error');
+                return;
+            }
+            if (username.length < 4){
+                showMessagereg('O nome de usuário deve ter no mínimo 4 caracteres.','error');
+                return;
+            }
+            if (password.length < 8){
+                showMessagereg('A senha deve ter no mínimo 8 caracteres.', 'error');
+                return;
+            }
             if (password !== confirmPassword) {
-                showMessage('As senhas não coincidem!', 'error');
-                return;
-            }
-
-            if (username.length < 4) {
-                showMessage('O nome de usuário deve ter no mínimo 4 caracteres.', 'error');
-                return;
-            }
-
-            if (password.length < 8) {
-                showMessage('A senha deve ter no mínimo 8 caracteres.', 'error');
+                showMessagereg('As senhas não coincidem!', 'error');
                 return;
             }
 
             const formData = new URLSearchParams();
-            formData.append('email', email);
+            formData.append('register-Email', email);
             formData.append('username', username);
-            formData.append('password', password);
+            formData.append('register-password', password);
+            formData.append('confirm_password', confirmPassword);
 
             try {
                 const response = await fetch('http://localhost:8000/Backend/src/register.php', {
@@ -455,16 +501,15 @@
 
                 if (response.ok) {
                     alert('CADASTRO REALIZADO!', 'success');
-                    setTimeout(() => {window.location.href = '/Frontend/index.html';}, 1500);
+                    setTimeout(() => {window.location.href = '/Frontend/templates/login.html';}, 1500);
                     return;
                 } else {
-                    // Mensagem de erro que vem do PHP
-                    showMessage(result.message, 'error');
+                    showMessagereg(result.message, 'error');
                 }
 
             } catch (error) {
                 console.error('Erro na requisição:', error);
-                showMessage('Erro ao tentar conectar com o servidor. Tente novamente.', 'error');
+                showMessagereg('Erro ao tentar conectar com o servidor. Tente novamente.', 'error');
             }
         });
     </script>

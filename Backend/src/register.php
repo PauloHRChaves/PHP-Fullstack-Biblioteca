@@ -2,27 +2,29 @@
 
 require_once __DIR__ . '/database.php';
 
-// Permite a comunicação com o front-end
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-$email = $_POST['email'];
+$email = $_POST['register-Email'];
 $username = $_POST['username'];
-$password = $_POST['password'];
+$password = $_POST['register-password'];
 
-//Validação dos dados: Email, Username e Password
-if (!isset($_POST['email'], $_POST['username'], $_POST['password'])) {
+// Validações
+if (!isset($_POST['register-Email'], $_POST['username'], $_POST['register-password'], $_POST['confirm_password'])) {
     http_response_code(400);
     echo json_encode(["message" => "Por favor, preencha todos os campos."]);
     exit;
 }
-
+if ( $_POST['register-password'] != $_POST['confirm_password']) {
+    http_response_code(400);
+    echo json_encode(["message" => "As senhas não coincidem!"]);
+    exit;
+}
 if (strlen($username) < 4) {
     http_response_code(400);
     echo json_encode(["message" => "O nome de usuário deve ter no mínimo 4 caracteres."]);
     exit;
 }
-
 if (strlen($password) < 8) {
     http_response_code(400);
     echo json_encode(["message" => "A senha deve ter no mínimo 8 caracteres."]);
@@ -30,7 +32,7 @@ if (strlen($password) < 8) {
 }
 
 try {
-    //Verifica se o email ou o nome de usuário já existem
+    // Verifica se o email ou o nome de usuário já existem
     $sql_check = "SELECT EMAIL, USERNAME FROM USERS WHERE EMAIL = ? OR USERNAME = ?";
     $stmt_check = $pdo->prepare($sql_check);
     $stmt_check->execute([$email, $username]);
@@ -53,7 +55,7 @@ try {
     
     $stmt_insert->execute([$email, $username, $hashed_password]);
 
-    //Resposta de sucesso
+    // Resposta de sucesso
     http_response_code(201);
     echo json_encode(["message" => "Usuário cadastrado com sucesso!"]);
 

@@ -15,8 +15,11 @@
 
 </head>
 <body>
-        <!-- Navigation -->
+    <!-- Navigation -->
     <header id="header-placeholder"></header>
+
+    <h1>Olá, <span id="username-display"></span>!</h1>
+    <p>Seu e-mail: <span id="email-display"></span></p>
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -27,5 +30,26 @@
                 });
         });
     </script>
+   
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // Requisição GET para a nova rota de API
+                const response = await fetch('http://localhost:8000/Backend/src/logged-in.php');
+                const user = await response.json();
+
+                if (response.ok) {
+                    document.getElementById('username-display').textContent = user.username;
+                    document.getElementById('email-display').textContent = user.email;
+                } else {
+                    window.location.href = '/Frontend/templates/login.html';
+                }
+            } catch (error) {
+                console.error('Erro ao buscar dados do usuário:', error);
+                window.location.href = '/Frontend/index.html';
+            }
+        });
+    </script>
+
 </body>
 </html>

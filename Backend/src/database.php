@@ -12,7 +12,6 @@ $password = $_ENV['DB_PASSWORD'];
 $pdo = null;
 
 try {
-    // Conectar diretamente ao banco de dados especificado
     $dsn = "mysql:host={$host};dbname={$dbname};charset=utf8mb4";
     $pdo = new PDO($dsn, $user, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
