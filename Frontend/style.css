@@ -28,7 +28,6 @@ html {
 body {
     font-family: "Open Sans", sans-serif;
     line-height: 1.6;
-    background: linear-gradient(290deg, var(--background) 0%, var(--second-background) 180%);
     display: flex;
     flex-direction: column;
     height: 100vh;

@@ -257,12 +257,12 @@
 
                 <form class="form">
                     <div class="container">
-                        <label class="label" for="Email">Email</label>
-                        <input required type="text" name="email" autocomplete="email" class="input" id="Email">
+                        <label class="label" for="email">Email</label>
+                        <input type="text" name="email" autocomplete="email" class="input" id="email">
                     </div>
                     <div class="container">
                         <label class="label" for="password">Senha</label>
-                        <input required type="password" name="password" class="input" id="password">
+                        <input type="password" name="password" class="input" id="password">
 
                         <div class="forgot">
                             <a rel="noopener noreferrer" href="#">Esqueceu a senha ?</a>
@@ -307,19 +307,19 @@
                 <form class="form">
                     <div class="container">
                         <label class="label" for="register-Email">Email</label>
-                        <input required type="text" name="text" autocomplete="email" class="input" id="register-Email" placeholder="example@gmail.com">
+                        <input type="text" name="text" autocomplete="email" class="input" id="register-Email" placeholder="example@gmail.com">
                     </div>
                     <div class="container">
                         <label class="label" for="username">Username</label>
-                        <input required type="text" name="username" autocomplete="username" class="input" id="username">
+                        <input type="text" name="username" autocomplete="username" class="input" id="username">
                     </div>
                     <div class="container">
                         <label class="label" for="register-password">Senha</label>
-                        <input required type="password" name="password" class="input" id="register-password">
+                        <input type="password" name="password" class="input" id="register-password">
                     </div>
                     <div class="container">
-                        <label class="label" for="confirm_password">Confirmar Senha</label>
-                        <input required type="password" name="confirm_password" class="input" id="confirm_password">
+                        <label class="label" for="confirm-password">Confirmar Senha</label>
+                        <input type="password" name="confirm-password" class="input" id="confirm-password">
                     </div>
 
                     <div id="register-message-container"></div>
@@ -411,46 +411,44 @@
             logmessageContainer.style.display = 'block';
         }
 
-
-        //verficar o formulario de login !
         const loginform = document.querySelector('#login-section .form');
-        loginform.addEventListener('submit', async (e) => { e.preventDefault();
+        loginform.addEventListener('submit', async (e) => {e.preventDefault();
             logmessageContainer.style.display = 'none';
 
-            const email = document.getElementById('Email').value;
-            const password = document.getElementById('password').value;
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
 
-            //Erros
-            if(!password || !email){
-                showMessagelog('Por favor, preencha todos os campos.','error');
+            /* Validação
+            if (!email || !password) {
+                showMessage(logmessageContainer, 'Por favor, preencha todos os campos.', 'error');
                 return;
-            }
+            }*/
             
             const formData = new URLSearchParams();
             formData.append('email', email);
             formData.append('password', password);
 
-            try{
+            try {
                 const response = await fetch('http://localhost:8000/Backend/src/login.php', {
                     method: 'POST',
                     body: formData
                 });
 
-                const result = await response.json();
-
-                if (response.ok) {
-                    window.location.href = '/Frontend/templates/profile.html';
-                } else {
-                    showMessagelog(result.message, 'error');
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    showMessagelog(errorData.message, 'error');
+                    return;
                 }
-            
+
+                const result = await response.json();
+                setTimeout(() => { window.location.href = '/Frontend/templates/profile.html'; }, 1500);
+
             } catch (error) {
                 console.error('Erro na requisição:', error);
-                showMessagelog('Erro ao tentar conectar com o servidor. Tente novamente.', 'error');
+                showMessagelog(logmessageContainer, 'Erro ao tentar conectar com o servidor. Tente novamente.', 'error');
             }
-
         });
-
+    
         const regmessageContainer = document.getElementById('register-message-container');
         function showMessagereg(message, type) {
             regmessageContainer.textContent = message;
@@ -460,15 +458,15 @@
 
         const registerForm = document.querySelector("#register-section .form");
         registerForm.addEventListener('submit', async (e) => { e.preventDefault();
-            regmessageContainer.style.display = 'none';
+            regmessageContainer.style.display = 'block';
 
             const email = document.getElementById('register-Email').value;
             const username = document.getElementById('username').value;
             const password = document.getElementById('register-password').value;
-            const confirmPassword = document.getElementById('confirm_password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
 
             //Erros
-            if(!password || !email || !username || !confirmPassword){
+           /* if(!password || !email || !username || !confirmPassword){
                 showMessagereg('Por favor, preencha todos os campos.','error');
                 return;
             }
@@ -484,12 +482,12 @@
                 showMessagereg('As senhas não coincidem!', 'error');
                 return;
             }
-
+            */
             const formData = new URLSearchParams();
             formData.append('register-Email', email);
             formData.append('username', username);
             formData.append('register-password', password);
-            formData.append('confirm_password', confirmPassword);
+            formData.append('confirm-password', confirmPassword);
 
             try {
                 const response = await fetch('http://localhost:8000/Backend/src/register.php', {
@@ -497,15 +495,16 @@
                     body: formData
                 });
 
-                const result = await response.json();
-
-                if (response.ok) {
-                    alert('CADASTRO REALIZADO!', 'success');
-                    setTimeout(() => {window.location.href = '/Frontend/templates/login.html';}, 1500);
+                // VERIFICA SE A RESPOSTA FOI OK ANTES DE PROCESSAR O JSON
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    showMessagereg(errorData.message, 'error');
                     return;
-                } else {
-                    showMessagereg(result.message, 'error');
                 }
+
+                const result = await response.json();
+                alert('CADASTRO REALIZADO!', 'success');
+                setTimeout(() => { window.location.href = '/Frontend/templates/login.html'; }, 1500);
 
             } catch (error) {
                 console.error('Erro na requisição:', error);
