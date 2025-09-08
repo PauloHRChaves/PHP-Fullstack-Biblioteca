@@ -10,15 +10,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="/Frontend/static/header.css">
+    <script src="/Frontend/static/header.js"></script>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 
-    <style>
-        body{
-            background-color: #000000;
-            color: #ffffff;
-        }
-            
+    <style>      
         main {
             flex-grow: 1; 
             margin-top: var(--header-height);
@@ -36,38 +33,39 @@
         .scrollbar-oculta::-webkit-scrollbar-thumb {
             background: transparent;
         }
+        body {
+            font-family: "Open Sans", sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(290deg, var(--black) 0%, var(--second-background) 180%);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
 
     </style>
-
+    
 </head>
 <body>
     <!-- Navigation -->
     <header id="header-placeholder"></header>
+
     <main>
-        <h1>Olá, <span id="username-display"></span>!</h1>
-        <p>Seu e-mail: <span id="email-display"></span></p>
+        <h1 id="testing">VOCÊ PRECISA ESTAR LOGADO! </h1>
+        <h1><span id="username-display"></span></h1>
+        <p><span id="email-display"></span></p>
     </main>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            fetch('../header.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('header-placeholder').innerHTML = data;
-                });
-        });
-    </script>
-   
-    <script>
         document.addEventListener('DOMContentLoaded', async () => {
             try {
-                // Requisição GET para a nova rota de API
                 const response = await fetch('http://localhost:8000/Backend/src/logged-in.php');
                 const user = await response.json();
 
                 if (response.ok) {
-                    document.getElementById('username-display').textContent = user.USERNAME;
+                    document.getElementById('username-display').textContent = 'OLÁ '+ user.USERNAME;
                     document.getElementById('email-display').textContent = user.EMAIL;
+                    document.getElementById('testing').textContent = '';
                 } else {
                     window.location.href = '/Frontend/templates/login.html';
                 }
@@ -77,6 +75,6 @@
             }
         });
     </script>
-
+    
 </body>
 </html>

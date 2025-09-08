@@ -12,15 +12,19 @@
             <li><a href="/Frontend/templates/profile.html" class="nav-link">Perfil</a></li>
         </ul>
 
-        <a class="nav-actions" href="/Frontend/templates/login.html">
+        <a class="nav-actions logged-out-only" href="/Frontend/templates/login.html">
             <button class="btn-primary">
                 <i class="bi bi-person-fill"></i>
                 <span>Sign in</span>
             </button>
         </a>
+
+        <a class="nav-actions logged-in-only" href="/Backend/src/logout.php">
+            <button class="btn-secundary">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Logout</span>
+            </button>
+        </a>
+
     </nav>
 </div>
-
-<script>
-
-</script>

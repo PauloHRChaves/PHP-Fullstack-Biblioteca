@@ -45,7 +45,6 @@
             background-attachment: fixed;
             background-size: cover;
         }
-
         
     </style>
 
@@ -147,9 +146,8 @@
                 display: flex;
                 justify-content: flex-end;
                 font-size: 0.75rem;
-                line-height: 1rem;
                 color: #9ca3af;
-                margin: 8px 0 14px 0;
+                margin-top: var(--radius);
             }
 
             .sign {
@@ -179,7 +177,7 @@
                     background-color: #706f6f;
                 }
     
-                .message {
+                .ou {
                     padding-left: 0.75rem;
                     padding-right: 0.75rem;
                     font-size: 1rem;
@@ -226,8 +224,13 @@
             display: none !important;
         }*/
 
+        .message{
+            height: fit-content;
+            align-content: center;
+            margin-top: 1rem;
+            padding: 0.5rem 0;
+        }
         .message-box{
-            margin: 2rem 0;
             color: #ff0000;
             justify-self: center;
             font-size: clamp(1rem, 1vw, 2rem);
@@ -269,14 +272,16 @@
                         </div>
                     </div>
 
-                    <div id="login-message-container"></div>
+                    <div class="message">
+                        <div id="login-message-container"></div>
+                    </div>
 
                     <button class="sign">Entrar</button>
                 </form>
 
                 <div class="social-message">
                     <div class="line"></div>
-                    <p class="message">ou</p>
+                    <p class="ou">ou</p>
                     <div class="line"></div>
                 </div>
 
@@ -322,14 +327,16 @@
                         <input type="password" name="confirm-password" class="input" id="confirm-password">
                     </div>
 
-                    <div id="register-message-container"></div>
+                    <div class="message">
+                        <div id="register-message-container"></div>
+                    </div>
 
                     <button class="sign">Cadastrar</button>
                 </form>
 
                 <div class="social-message">
                     <div class="line"></div>
-                    <p class="message">ou</p>
+                    <p class="ou">ou</p>
                     <div class="line"></div>
                 </div>
 
@@ -403,7 +410,7 @@
     
     <!--Validação de Cadastro-->
     <script>
-        // Função para mostrar mensagens
+        // Função para mostrar mensagens no Login
         const logmessageContainer = document.getElementById('login-message-container');
         function showMessagelog(message, type) {
             logmessageContainer.textContent = message;
@@ -449,6 +456,7 @@
             }
         });
     
+        // Função para mostrar mensagens no Cadastro
         const regmessageContainer = document.getElementById('register-message-container');
         function showMessagereg(message, type) {
             regmessageContainer.textContent = message;

@@ -27,12 +27,12 @@ main::-webkit-scrollbar-thumb {
     background: transparent;
 }
 
-/* Com video de background deixa pouco mais suave, usando img pode remover */
+/* Com video de background deixa pouco mais suave, usando img pode remover 
 .first-container, 
 .second-container {
     transform: translateZ(0);
     will-change: transform;
-}
+}*/
 
 
 /* Introduction */
@@ -51,6 +51,7 @@ main::-webkit-scrollbar-thumb {
         max-width: 40dvw;
         z-index: 1;
     }
+
     .intro-title {
         font-family: "Work Sans", sans-serif;
         font-weight: 600;
@@ -132,5 +133,8 @@ main::-webkit-scrollbar-thumb {
         opacity: 0.8;
         z-index: -1;
     }
+}
+.second-container{
+    height: 100vh;
 }
 
