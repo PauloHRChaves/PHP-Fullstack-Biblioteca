@@ -34,7 +34,7 @@ body {
     overflow: hidden;
 }
 
-/* Navigation */
+/* Cabeçalho de navegação */
 .header-container {
     height: 80px;
     position: fixed;
@@ -153,20 +153,20 @@ body {
     }
 }
 
-/* test */
-.header-container.show {
-    opacity: 1;
-}
+/* Testando mudança de botão Login-Logout */
+    .header-container.show {
+        opacity: 1;
+    }
 
-.logged-in-only,
-.logged-out-only {
-    display: none;
-}
+    .logged-in-only,
+    .logged-out-only {
+        display: none;
+    }
 
-/* Exibe o botão de login/logout com base na classe do body */
-body.is-logged-in .logged-in-only {
-    display: flex;
-}   
-body.is-logged-out .logged-out-only {
-    display: flex;
-}
+    /* Exibe o botão de login/logout com base na classe do body */
+    body.is-logged-in .logged-in-only {
+        display: flex;
+    }   
+    body.is-logged-out .logged-out-only {
+        display: flex;
+    }

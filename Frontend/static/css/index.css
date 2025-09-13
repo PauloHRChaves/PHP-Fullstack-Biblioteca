@@ -20,24 +20,20 @@ main::-webkit-scrollbar {
     width: clamp(0.1rem, 0.7vw, 0.5rem);
 }
 main::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, var(--white) 0%, var(--black) 120%);
+    background: linear-gradient(180deg, var(--white) 0%, var(--second-background) 120%);
     border-radius: var(--radius);
 }
-.scrollbar-oculta::-webkit-scrollbar-thumb {
-    background: transparent;
-}
 
-/* Com video de background deixa pouco mais suave, usando img pode remover 
+/* Com o video de background deixa o scroll pouco mais suave, usando img no 'poster' pode remover 
 .first-container, 
 .second-container {
     transform: translateZ(0);
     will-change: transform;
 }*/
 
-
 /* Introduction */
 .first-container {
-    min-height: 100vh;
+    min-height: 70dvh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -45,7 +41,6 @@ main::-webkit-scrollbar-thumb {
     padding: 2rem 4rem;
     text-align: center;
     border-radius: var(--radius);
-    position: relative;
 
     .first-content {
         max-width: 40dvw;
@@ -117,10 +112,10 @@ main::-webkit-scrollbar-thumb {
         }
     }
 }
-/* Background Animado*/
+
+/* Background*/
 .first-container{
     position: relative;
-    min-height: 70dvh;
     overflow: hidden;
   
     .background-video {
@@ -135,6 +130,6 @@ main::-webkit-scrollbar-thumb {
     }
 }
 .second-container{
-    height: 100vh;
+    min-height: 100vh;
 }
 
