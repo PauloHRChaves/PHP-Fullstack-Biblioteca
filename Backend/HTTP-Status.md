@@ -1,14 +1,14 @@
 <h1>HTTP STATUS</h1>
 
 <h2>1xx: Respostas Informativas</h2>
-* Esses códigos de status indicam que a solicitação foi recebida e o processo continua. A resposta final ainda não foi enviada.
+   * Esses códigos de status indicam que a solicitação foi recebida e o processo continua. A resposta final ainda não foi enviada.
 
     **100** Continue: O servidor recebeu os cabeçalhos da solicitação e o cliente pode prosseguir com o envio do corpo da solicitação.
 
     **101** Switching Protocols: O solicitante pediu ao servidor para mudar de protocolo e o servidor está atendendo ao pedido.
 
 <h2>2xx: Respostas de Sucesso</h2>
-* Esses códigos indicam que a solicitação foi recebida, entendida e aceita com sucesso.
+   * Esses códigos indicam que a solicitação foi recebida, entendida e aceita com sucesso.
 
     **200** OK: A solicitação foi bem-sucedida. O resultado varia dependendo do método da solicitação (por exemplo, GET, POST).
 
@@ -19,7 +19,7 @@
     **204** No Content: A solicitação foi bem-sucedida, mas a resposta não contém nenhum corpo. Útil para atualizações de páginas que não precisam de uma resposta de corpo.
 
 <h2>3xx: Respostas de Redirecionamento</h2>
-* Esses códigos indicam que o cliente precisa tomar uma ação adicional para concluir a solicitação.
+   * Esses códigos indicam que o cliente precisa tomar uma ação adicional para concluir a solicitação.
 
     **301** Moved Permanently: O recurso solicitado foi permanentemente movido para um novo URL. O cliente deve usar este novo URL em futuras solicitações.
 
@@ -28,7 +28,7 @@
     **304** Not Modified: Indica que a resposta não foi modificada desde a última vez que o cliente a solicitou. O cliente pode usar uma versão em cache da resposta.
 
 <h2>4xx: Erros do Cliente</h2>
-* Esses códigos de erro indicam que o cliente cometeu um erro. O servidor não pode processar a solicitação devido a algo que o cliente fez (por exemplo, sintaxe incorreta, falta de autenticação).
+   * Esses códigos de erro indicam que o cliente cometeu um erro. O servidor não pode processar a solicitação devido a algo que o cliente fez (por exemplo, sintaxe incorreta, falta de autenticação).
 
     **400** Bad Request: O servidor não pode ou não irá processar a solicitação devido a um erro aparente do cliente (por exemplo, sintaxe de solicitação malformada).
 
@@ -43,7 +43,7 @@
     **429** Too Many Requests: O usuário enviou muitas solicitações em um determinado período de tempo (limitação de taxa).
 
 <h2>5xx: Erros do Servidor</h2>
-* Esses códigos de erro indicam que o servidor falhou ao atender a uma solicitação aparentemente válida.
+   * Esses códigos de erro indicam que o servidor falhou ao atender a uma solicitação aparentemente válida.
 
     **500** Internal Server Error: O servidor encontrou uma condição inesperada que o impediu de atender à solicitação. É um erro genérico para a maioria dos problemas do lado do servidor.
 
