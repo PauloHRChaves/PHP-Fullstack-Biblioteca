@@ -96,7 +96,6 @@
     
     <!--Validação de Login-->
     <script>
-        // Função para mostrar mensagens no Login
         const logmessageContainer = document.getElementById('login-message-container');
         function showMessagelog(message, type) {
             logmessageContainer.textContent = message;
@@ -122,20 +121,21 @@
             formData.append('password', password);
 
             try {
-                const response = await fetch('http://localhost:8000/Backend/src/login.php', {
+                const response = await fetch('http://localhost:8000/login', {
                     method: 'POST',
-                    body: formData
+                    body: formData,
+                    credentials: 'include'
                 });
 
-                if (!response.ok) {
+                if (response.ok) {
+                    const result = await response.json();
+                    const username = result.user.username;
+                    const successMessage = `Login bem-sucedido, ${username}!`;
+                    showMessagelog(successMessage, 'success'); setTimeout(() => { window.location.href = '/Frontend/index.html';}, 1500);
+                }else{
                     const errorData = await response.json();
                     showMessagelog(errorData.message, 'error');
-                    return;
                 }
-
-                const result = await response.json();
-                setTimeout(() => { window.location.href = '/Frontend/templates/profile.html'; }, 1500);
-
             } catch (error) {
                 console.error('Erro na requisição:', error);
                 showMessagelog(logmessageContainer, 'Erro ao tentar conectar com o servidor. Tente novamente.', 'error');
