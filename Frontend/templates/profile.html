@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <!--Configurações de exibição (caracteres especiais/design responsivo)-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!--Nome da Aba-->
+    <title>D.Web-PHP</title>
+
+    <!--Font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!--Favicon(logo na aba)-->
+    <link rel="apple-touch-icon" sizes="180x180" href="/Frontend/static/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/Frontend/static/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/Frontend/static/favicon_io/">
+    <link rel="manifest" href="/Frontend/static/favicon_io/site.webmanifest">
+    
+    <!--Inserir e estilizar cabeçalho na página-->
+    <script src="/Frontend/static/js/header.js"></script>
+    <link rel="stylesheet" href="/Frontend/static/css/header.css">
+
+    <!--Bootstrap Icons-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+
+    <style>
+        :root{
+            --clamp: clamp(5rem, 4vw, 8rem );
+        } 
+        
+        body {
+            background: linear-gradient(0deg, var(--black) 0%, var(--second-background) 150%);
+        }
+
+        main {
+            flex-grow: 1; 
+            margin-top: var(--header-height);
+            overflow-y: auto;
+            padding: 0 0.5rem;
+        }
+        /* Scrollbar*/
+        main::-webkit-scrollbar {
+            width: clamp(0.1rem, 0.7vw, 0.5rem);
+        }
+        main::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--white) 0%, var(--black) 120%);
+            border-radius: var(--radius);
+        }
+    </style>
+
+    <style>
+        .dashboard-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 2rem 4rem 0 4rem;
+        }
+
+        .dashboard-wrapper {
+            width: 80%;
+            border-radius: 1rem;
+            min-width: 550px;
+            color: #ffffff;
+            background-color: #02172071;
+            padding: 2rem 3rem;
+            border: 2px solid #04455f5a;
+            min-width: 1000px;
+            
+            .dashboard-grid{
+                display: grid;
+                grid-template-columns: 2fr 1fr;
+                grid-template-areas:
+                    "profile profile"
+                    "stats aside"
+                    "books aside";
+                gap: 2rem;
+
+                .user-profile-section {
+                    grid-area: profile;
+                    display: flex;
+                    gap: 1.5rem;
+                    border-radius: 4rem;
+                    margin-bottom: 2rem;
+                
+
+                    img {
+                        border-radius: 50%;
+                        border: 2px solid #021720;
+                        object-fit: cover;
+                    }
+                }
+                
+                .reading-statistics-section {
+                    grid-area: stats;
+                    background-color: rgba(25, 73, 101, 0.34);
+                    padding: 1rem 1.5rem;
+                    border-radius: 1rem;
+                    border: 2px solid #04455f5a;
+
+                    .content-statistics{
+                        margin-top: 1rem;
+                        min-width: 400px;
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        grid-template-areas:
+                            "box-books-year box-reading-time"
+                            "box-pages-read box-sequence-books";
+                        gap: 2rem;
+
+                        .box{
+                            display: flex;
+                            gap: 1rem;
+                            align-items: center;
+
+                            i{
+                                background-color: #021720;
+                                font-size: 1.3rem;
+                                width: 3rem;
+                                height: 3rem;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                border-radius: 50%;
+                            }
+                        
+                            .display-flex-column{
+                                display: flex;
+                                flex-direction: column;
+
+                                p{
+                                    font-size: 1.3rem;
+                                }
+                                h2{
+                                    font-size: 2rem;
+                                    color: rgb(232, 177, 109);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .favorite-books-section {
+                    grid-area: books;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem;
+                    padding: 1rem 1.5rem;
+                    border-radius: 1rem;
+                    border: 2px solid #04455f5a;
+                    background-color: rgba(25, 73, 101, 0.34);
+
+                    .arrow-short {
+                        font-size: 2rem;
+                        cursor: pointer;
+                        flex-shrink: 0;
+                        user-select: none;
+                    }
+
+                    .bookcontent {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 1rem;
+                    
+                    
+                        .book-scroller-container {
+                            width: calc(4 * 150px + 3 * 1rem); /* Largura para 4 livros e 3 espaços de 1rem */
+                            overflow-x: scroll;
+                            overflow-y: hidden;
+                        }
+                        
+                        .book-scroller-container::-webkit-scrollbar {
+                            display: none;
+                        }
+                        
+                        .book-scroller-wrapper {
+                            display: flex;
+                            gap: 1rem;
+                            flex-wrap: nowrap;
+                        }
+                        
+                        .bookstar {
+                            display: flex;
+                            flex-direction: column;
+                            width: 150px;
+                            height: fit-content;
+                            flex-shrink: 0;
+                            
+                            .bookliked {
+                                height: 150px;
+                                border-radius: var(--radius);
+                                background-color: rgba(109, 146, 168, 0.34);
+                            }
+
+                            .bookname {
+                                font-size: clamp(15px, 1vh, 20px);
+                                word-wrap: break-word;
+                                margin-top: 5px;
+                            }
+                        }
+                    }
+                }
+                
+                .sidebar {
+                    grid-area: aside;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem;
+
+                    .currently-reading{
+                        display: flex;
+                        flex-direction: column;
+                        gap: var(--radius);
+                        align-items: center;
+                        background-color: rgba(25, 73, 101, 0.34);
+                        padding: 1rem 1.5rem;
+                        border-radius: 1rem;
+                        border: 2px solid #04455f5a;
+
+                    }
+                    .wish-list{
+                        display: flex;
+                        flex-direction: column;
+                        gap: var(--radius);
+                        align-items: center;
+                        background-color: rgba(25, 73, 101, 0.34);
+                        padding: 1rem 1.5rem;
+                        border-radius: 1rem;
+                        border: 2px solid #04455f5a;
+                    }
+                    
+                }
+            }
+        }
+
+    </style>
+    
+</head>
+<body>
+    <!-- Navigation -->
+    <header id="header-placeholder"></header>
+
+    <!--Todo conteúdo da pagina-->
+    <main>
+        <div class="dashboard-page">
+            <div class="dashboard-wrapper">
+                <div class="dashboard-grid">
+                    <section class="user-profile-section">
+                        <img src="/Frontend/static/profile-icon.png" alt="profile_pic" style="width: 8rem;height: 8rem;">
+                        <div>
+                            <h1><span id="username-display"></span></h1>
+                        </div>
+                    </section>
+                    
+                    <section class="reading-statistics-section">
+                        <h2>Estatisticas de leitura</h2>
+                        <div class="content-statistics">
+                                <section class="box-books-year box">
+                                    <i class="bi bi-book"></i>
+                                    <div class="display-flex-column">
+                                        <p class="text">Livros Lidos Este Ano</p>
+                                        <h2 id="book-year-number">10</h2>
+                                    </div>
+                                </section>
+                                <section class="box-pages-read box">
+                                    <i class="bi bi-check2-all"></i>
+                                        <div class="display-flex-column">
+                                            <p class="text">Páginas Lidas</p>
+                                        <h2 id="book-year-number">10000</h2>
+                                    </div>
+                                </section>
+                                <section class="box-reading-time box">
+                                    <i class="bi bi-clock-history"></i>
+                                        <div class="display-flex-column">
+                                            <p>Tempo de Leitura</p>
+                                        <h2 id="book-year-number">100h</h2>
+                                </section>
+                                <section class="box-sequence-books box">
+                                    <i class="bi bi-calendar-check"></i>
+                                        <div class="display-flex-column">
+                                            <p>Sequência Atual</p>
+                                        <h2 id="book-year-number">5 dias</h2>
+                                    <!--conteudo-->
+                                </section>
+                        </div>
+                    </section>
+
+                    <section class="favorite-books-section">
+                        <h2>Livros Favoritos</h2>
+                        <div class="bookcontent">
+                            <i class="bi bi-arrow-left-short arrow-short" onclick="scrollBooks(-1)"></i>
+                            <div class="book-scroller-container">
+                                <div class="book-scroller-wrapper">
+                                    <div class="bookstar">
+                                        <div class="bookliked"></div>
+                                        <h3 class="bookname">BookName 1</h3>
+                                        <p class="bookcretor">Author 1</p>
+                                    </div>
+                                    <div class="bookstar">
+                                        <div class="bookliked"></div>
+                                        <h3 class="bookname">BookName 2</h3>
+                                        <p class="bookcretor">Author 2</p>
+                                    </div>
+                                    <div class="bookstar">
+                                        <div class="bookliked"></div>
+                                        <h3 class="bookname">BookName 3</h3>
+                                        <p class="bookcretor">Author 3</p>
+                                    </div>
+                                    <div class="bookstar">
+                                        <div class="bookliked"></div>
+                                        <h3 class="bookname">BookName 4</h3>
+                                        <p class="bookcretor">Author 4</p>
+                                    </div>
+                                    <div class="bookstar">
+                                        <div class="bookliked"></div>
+                                        <h3 class="bookname">BookName 5</h3>
+                                        <p class="bookcretor">Author 5</p>
+                                    </div>
+                                    <div class="bookstar">
+                                        <div class="bookliked"></div>
+                                        <h3 class="bookname">BookName 6</h3>
+                                        <p class="bookcretor">Author 6</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <i class="bi bi-arrow-right-short arrow-short" onclick="scrollBooks(1)"></i>
+                        </div>
+                    </section>
+                
+                    <aside class="sidebar">
+                        <section class="currently-reading">
+                            <h2>Lendo Atualmente</h2>
+                            <div id="reading">
+                                <!--conteudo-->
+                            </div>
+                        </section>
+                        <section class="wish-list">
+                            <h2>Livros na Wishlist</h2>
+                            <div id="wishbook">
+                                <!--conteudo-->
+                            </div>
+                        </section>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer></footer>
+
+    <!--Scroll para favorite-books-section-->
+    <script>
+        function scrollBooks(direction) {
+            const scroller = document.querySelector('.book-scroller-container');
+            const bookWidth = 150;
+            const gap = 16;
+            const scrollAmount = (bookWidth + gap);
+            scroller.scrollBy({
+                left: direction * scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+
+    <!--Usuário Logado-->
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const token = localStorage.getItem('authToken');
+
+            if (!token) {
+                window.location.href = '/Frontend/templates/login.html';
+                return;
+            }
+            try {
+                const response = await fetch('http://localhost:8000/logged-in', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const user = await response.json();
+
+                if (response.ok) {
+                    document.getElementById('username-display').textContent = user.USERNAME;
+                } else {
+                    window.location.href = '/Frontend/templates/login.html';
+                }
+            } catch (error) {
+                console.error('Erro ao buscar dados do usuário:', error);
+                window.location.href = '/Frontend/templates/login.html';
+            }
+        });
+    </script>
+    
+</body>
+</html>
