@@ -368,19 +368,30 @@
     <!--Usuário Logado-->
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
+            const token = localStorage.getItem('authToken');
+
+            if (!token) {
+                window.location.href = '/Frontend/templates/login.html';
+                return;
+            }
             try {
-                const response = await fetch('http://localhost:8000/logged-in',{
-                    credentials: 'include' });
+                const response = await fetch('http://localhost:8000/logged-in', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
                 const user = await response.json();
 
                 if (response.ok) {
-                    document.getElementById('username-display').textContent ='OLÁ, ' + user.USERNAME;
+                    document.getElementById('username-display').textContent = user.USERNAME;
                 } else {
                     window.location.href = '/Frontend/templates/login.html';
                 }
             } catch (error) {
                 console.error('Erro ao buscar dados do usuário:', error);
-                window.location.href = '/Frontend/index.html';
+                window.location.href = '/Frontend/templates/login.html';
             }
         });
     </script>

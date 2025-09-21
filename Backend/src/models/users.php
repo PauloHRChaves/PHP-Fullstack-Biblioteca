@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
+require_once ROOT_PATH . 'src/config/database.php';
 
 class User {
     private $pdo;

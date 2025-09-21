@@ -1,20 +1,18 @@
 <?php
-require_once __DIR__ . '/../../src/controllers/AuthController.php';
+define('ROOT_PATH', __DIR__ . '/../../');
 
-session_set_cookie_params([
-    'samesite' => 'None',
-    'httponly' => true,
-    'path' => '/'
-]);
+require ROOT_PATH . 'vendor/autoload.php';
+require_once ROOT_PATH . 'src/controllers/AuthController.php';
+
+// Carrega as variáveis do .env
+$dotenv = Dotenv\Dotenv::createImmutable(ROOT_PATH);
+$dotenv->load();
 
 header("Access-Control-Allow-Origin: http://127.0.0.1:5000");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-header("Access-Control-Allow-Credentials: true");
-
-session_start();
 
 // Lida com a requisição OPTIONS (pré-voo do CORS)
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
@@ -36,8 +34,6 @@ if ($request_uri === '/register' && $request_method === 'POST') {
 } elseif ($request_uri === '/logged-in' && $request_method === 'GET') {
     $authController->logged();
     
-}elseif ($request_uri === '/logout' && $request_method === 'GET') {
-    $authController->logout();
 } 
 else { // futuramente retornar uma pagina personalizada de error 404
     http_response_code(404);

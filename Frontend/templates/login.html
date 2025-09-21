@@ -19,11 +19,26 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/Frontend/static/favicon_io/">
     <link rel="manifest" href="/Frontend/static/favicon_io/site.webmanifest">
     
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
     <!--Bootstrap Icons-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
     
     <!--CSS da página-->
     <link rel="stylesheet" href="/Frontend/static/css/login-register.css">
+
+    <style>
+        .toastify{
+            box-shadow: none;
+            font-size: clamp(0.5rem, 1vw, 1.2rem);
+            border-radius: var(--radius);
+            font-family: "Work Sans", sans-serif;
+            font-weight: 600;
+            min-width: 15%;
+            justify-items: center;
+        }
+    </style>
 
 </head>
 
@@ -96,6 +111,16 @@
     
     <!--Validação de Login-->
     <script>
+        function showToast(mensage) {
+            Toastify({
+                text: mensage,
+                duration: 4000,
+                gravity: "top",
+                position: "center",
+                backgroundColor: "#013504",
+            }).showToast();
+        }
+        
         const logmessageContainer = document.getElementById('login-message-container');
         function showMessagelog(message, type) {
             logmessageContainer.textContent = message;
@@ -123,16 +148,19 @@
             try {
                 const response = await fetch('http://localhost:8000/login', {
                     method: 'POST',
-                    body: formData,
-                    credentials: 'include'
+                    body: formData
                 });
 
                 if (response.ok) {
                     const result = await response.json();
                     const username = result.user.username;
-                    const successMessage = `Login bem-sucedido, ${username}!`;
-                    showMessagelog(successMessage, 'success'); setTimeout(() => { window.location.href = '/Frontend/index.html';}, 1500);
-                }else{
+                    
+                    localStorage.setItem('authToken', result.token); 
+
+                    const successMessage = `Login bem-sucedido, Olá ${username}`;
+                    showToast(successMessage);
+                    setTimeout(() => { window.location.href = '/Frontend/index.html';}, 1500);
+                } else{
                     const errorData = await response.json();
                     showMessagelog(errorData.message, 'error');
                 }

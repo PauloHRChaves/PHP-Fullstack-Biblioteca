@@ -15,21 +15,35 @@ async function loadAndDisplayHeader() {
         return false;
     }
 }
+
 // Função para verificar o status de login do usuário
 async function checkLoginStatus() {
+    const token = localStorage.getItem('authToken');
+
+    if (!token) {
+        document.body.classList.add('is-logged-out');
+        document.body.classList.remove('is-logged-in');
+        return false;
+    }
+
     try {
         const response = await fetch('http://localhost:8000/logged-in', {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
-            },
-            credentials:'include'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
         });
 
         if (response.ok) {
             document.body.classList.add('is-logged-in');
             document.body.classList.remove('is-logged-out');
             return true;
+        } else if (response.status === 401) {
+            localStorage.removeItem('authToken');
+            document.body.classList.add('is-logged-out');
+            document.body.classList.remove('is-logged-in');
+            return false;
         } else {
             document.body.classList.add('is-logged-out');
             document.body.classList.remove('is-logged-in');
@@ -46,35 +60,13 @@ async function checkLoginStatus() {
 function setupLogout() {
     const logoutButton = document.getElementById('logout-button');
 
-    // Verifica se o botão de logout existe na página
     if (logoutButton) {
-        logoutButton.addEventListener('click', async (event) => {
-            event.preventDefault(); // Impede o comportamento padrão de links, se o botão estiver dentro de uma tag <a>
+        logoutButton.addEventListener('click', (event) => {
+            event.preventDefault();
 
-            try {
-                // Faz a requisição para o endpoint de logout
-                const response = await fetch('http://localhost:8000/logout', {
-                    method: 'GET',
-                    credentials: 'include' // Essencial para que o cookie de sessão seja enviado
-                });
-
-                if (response.ok) {
-                    // Se a resposta for 200 (sucesso), desloga o usuário no frontend
-                    document.body.classList.remove('is-logged-in');
-                    document.body.classList.add('is-logged-out');
-                    console.log('Logout bem-sucedido.');
-
-                    // Opcional: Redirecionar para a página inicial ou de login
-                    window.location.href = '/Frontend/index.html'; 
-                } else {
-                    // Em caso de erro, exibe uma mensagem no console
-                    const errorData = await response.json();
-                    console.error("Erro no logout:", errorData.message);
-                }
-            } catch (error) {
-                // Em caso de falha de rede ou servidor, exibe o erro
-                console.error("Erro ao tentar fazer logout:", error);
-            }
+            // Remove o token do localStorage
+            localStorage.removeItem('authToken');
+            window.location.href = '/Frontend/index.html';
         });
     }
 }
@@ -102,9 +94,21 @@ document.addEventListener("DOMContentLoaded", async () => {
             loadAndDisplayHeader(),
             checkLoginStatus()
         ]);
+
+        const profileLink = document.getElementById('auth-link');
+        if (profileLink) {
+            profileLink.addEventListener('click', (event) => {
+                event.preventDefault();
+                const token = localStorage.getItem('authToken');
+                if (token) {
+                    window.location.href = '/Frontend/templates/profile.html';
+                } else {
+                    showToast();
+                }
+            });
+        }
         
         activateNavLink();
-
         setupLogout();
 
         const headerContainer = document.querySelector('.header-container');

@@ -1,31 +1,37 @@
 <?php
 class Validator {
     public static function validateRegisterData(array $data) {
-        if (!isset($data['email']) || empty(trim($data['email'])) ||
+        // Validação inicial para verificar se todos os campos estão presentes e não vazios
+        if (!isset($data['register-Email']) || empty(trim($data['register-Email'])) ||
             !isset($data['username']) || empty(trim($data['username'])) ||
-            !isset($data['password']) || empty(trim($data['password'])) ||
-            !isset($data['confirmPassword']) || empty(trim($data['confirmPassword']))
+            !isset($data['register-password']) || empty(trim($data['register-password'])) ||
+            !isset($data['confirm-password']) || empty(trim($data['confirm-password']))
         ) {
             return "Por favor, preencha todos os campos.";
         }
+        
+        $email = trim($data['register-Email']);
+        $username = trim($data['username']);
+        $password = trim($data['register-password']);
+        $confirmPassword = trim($data['confirm-password']);
 
-        if (!filter_var(trim($data['email']), FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return "Formato de e-mail inválido.";
         }
 
-        if (strlen(trim($data['username'])) < 4) {
+        if (strlen($username) < 4) {
             return "O nome de usuário deve ter no mínimo 4 caracteres.";
         }
 
-        if (strlen(trim($data['password'])) < 8) {
-            return "A senha deve ter no mínimo 8 caracteres.";
-        }
-
-        if (trim($data['password']) != trim($data['confirmPassword'])) {
+        if ($password !== $confirmPassword) {
             return "As senhas não coincidem!";
         }
 
-        return null; // null pq passou das validações
+        if (strlen($password) < 8) {
+            return "A senha deve ter no mínimo 8 caracteres.";
+        }
+
+        return null;
     }
 
     public static function validateLoginData(array $data){

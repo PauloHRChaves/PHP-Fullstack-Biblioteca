@@ -18,6 +18,9 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/Frontend/static/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/Frontend/static/favicon_io/">
     <link rel="manifest" href="/Frontend/static/favicon_io/site.webmanifest">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     
     <!--Inserir e estilizar cabeçalho na página-->
     <script src="/Frontend/static/js/header.js"></script>
@@ -28,6 +31,48 @@
 
     <!--CSS da página-->
     <link rel="stylesheet" href="/Frontend/static/css/index.css">
+
+    <style>
+        .toastify{
+            box-shadow: none;
+            font-size: clamp(0.5rem, 1vw, 1.2rem);
+            border-radius: var(--radius);
+            font-family: "Work Sans", sans-serif;
+            font-weight: 600;
+        }
+    </style>
+
+    <style>
+        .second-container{
+            margin-top: 2rem;
+            min-width: 1200px;
+        }
+        .second-content{
+            display: flex;
+            background-color: #263f60;
+            border-radius: 4rem;
+        }
+
+        .bookopen{
+            position: relative;
+            width: 50%;
+            img{
+                position: absolute;
+                top: -4rem;
+                left: 6%;
+                width: 40rem;
+            }
+        }
+        .TEST{
+            width: 50%;
+            color: var(--white);
+            height: 30rem;
+
+            h1{
+                font-size: clamp(2rem, 2vw, 5rem);
+            }
+        }
+    </style>
 
 </head>
 <body>
@@ -58,10 +103,31 @@
             </div>
         </section>
 
-        <section class="second-container"></section>
+        <section class="second-container">
+            <div class="second-content">
+                <div class="bookopen">
+                    <img src="/Frontend/static/book.png" alt="book">
+                </div>
+
+                <div class="TEST">
+                    <h1>TituloEx</h1>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer></footer>
 
+    <script>
+        function showToast() {
+            Toastify({
+                text: 'Você precisa estar logado.',
+                duration: 4000,
+                gravity: "top",
+                position: "right",
+                backgroundColor: "#303F55",
+            }).showToast();
+        }
+    </script>
 </body>
 </html>

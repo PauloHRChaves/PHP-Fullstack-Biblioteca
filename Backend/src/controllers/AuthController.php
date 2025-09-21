@@ -1,6 +1,9 @@
 <?php
-require_once __DIR__ . '/../utils/validator.php'; // Conecta as validações
-require_once __DIR__ . '/../models/users.php'; // Conecta a logica dos endpoints
+require_once ROOT_PATH . 'src/utils/validator.php'; 
+require_once ROOT_PATH . 'src/models/users.php';
+
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class AuthController {
 
@@ -55,10 +58,34 @@ class AuthController {
 
         // logico de vericação
         if ($user && password_verify($password, $user['USER_PASSWORD'])) {
-            $_SESSION['user_id'] = $user['ID'];
+            // REMOVIDO
+            //$_SESSION['user_id'] = $user['ID'];
+            //error_log("Session user_id set: " . $_SESSION['user_id']);
 
+            // Token
+            $tokenload = [
+                'iat'  => time(),                       // Horário em que o token foi gerado
+                'exp'  => time() + (3600 * 24),         // Expira em 24 horas
+                'data' => [
+                    'id'       => $user['ID'],
+                    'username' => $user['USERNAME']
+                ]
+            ];
+            
+            // Chave jwt para assinar o token
+            $secretKey = $_ENV['JWT_KEY'];
+
+            // Gerar token
+            $token = JWT::encode($tokenload, $secretKey, 'HS256');
+
+            // Resposta de sucesso
             http_response_code(200);
-            echo json_encode(["message" => "Login bem-sucedido!", "user" => ["username" => $user['USERNAME']]], JSON_UNESCAPED_UNICODE);
+            echo json_encode([
+                "message" => "Login bem-sucedido!",
+                "token" => $token,
+                "user" => ["username" => $user['USERNAME']]
+            ], JSON_UNESCAPED_UNICODE);
+            
         } else {
             http_response_code(401); 
             echo json_encode(["message" => "E-mail ou senha incorretos."], JSON_UNESCAPED_UNICODE);
@@ -66,36 +93,42 @@ class AuthController {
     }
 
     public function logged() {
-        // Checa a sessão
-        if (!isset($_SESSION['user_id'])) {
+        $authHeader = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
+
+        // Extrai o token
+        if (preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
+            $token = $matches[1];
+        } else {
             http_response_code(401);
-            echo json_encode(["message" => "Usuário não autenticado."], JSON_UNESCAPED_UNICODE);
+            echo json_encode(["message" => "Token de autenticação não fornecido."], JSON_UNESCAPED_UNICODE);
             exit;
         }
 
-        // Buscar os dados do usuário
-        $userModel = new User();
-        $user = $userModel->findById($_SESSION['user_id']);
+        try {
+            $secretKey = $_ENV['JWT_KEY'];
+            // Decodifique e valide o token
+            $decoded = JWT::decode($token, new Key($secretKey, 'HS256'));
 
-        // logica de vericação
-        if ($user) {
-            http_response_code(200);
-            echo json_encode($user, JSON_UNESCAPED_UNICODE);
-        } else {
-            // Se a sessão existir mas o usuário não for encontrado no banco (ex: deletado)
-            http_response_code(404);
-            echo json_encode(["message" => "Usuário não encontrado."], JSON_UNESCAPED_UNICODE);
+            // ID do token para buscar os dados do usuário
+            $userId = $decoded->data->id;
+            $userModel = new User();
+            $user = $userModel->findById($userId);
+
+            if ($user) {
+                http_response_code(200);
+                echo json_encode($user, JSON_UNESCAPED_UNICODE);
+            } else {
+                http_response_code(404);
+                echo json_encode(["message" => "Usuário não encontrado."], JSON_UNESCAPED_UNICODE);
+                exit;
+            }
+
+        } catch (Exception $e) {
+            // Token inválido (expirado, modificado, etc.)
+            http_response_code(401);
+            echo json_encode(["message" => "Token inválido ou expirado."], JSON_UNESCAPED_UNICODE);
+            exit;
         }
-    }
-
-    public function logout() {
-        
-        $_SESSION = [];
-        
-        session_destroy();
-        
-        http_response_code(200);
-        echo json_encode(["message" => "Logout bem-sucedido."], JSON_UNESCAPED_UNICODE);
     }
 }
 ?>

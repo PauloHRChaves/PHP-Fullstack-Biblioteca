@@ -82,6 +82,7 @@ main::-webkit-scrollbar-thumb {
             transition: all 0.3s ease;
             overflow: hidden;
             font-size: clamp(1rem, 1vw, 3rem);
+            margin-bottom: 4rem;
         }
     
         .search-bar:focus-within {
