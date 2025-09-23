@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <!--Configurações de exibição (caracteres especiais/design responsivo)-->
@@ -29,9 +29,12 @@
     <!--Bootstrap Icons-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 
+    <script src="/Frontend/static/js/index.js"></script>
+
     <!--CSS da página-->
     <link rel="stylesheet" href="/Frontend/static/css/index.css">
-
+    <link rel="stylesheet" href="/Frontend/static/css/carrossel.css">
+    
     <style>
         .toastify{
             box-shadow: none;
@@ -41,39 +44,6 @@
             font-weight: 600;
         }
     </style>
-
-    <style>
-        .second-container{
-            margin-top: 2rem;
-            min-width: 1200px;
-        }
-        .second-content{
-            display: flex;
-            background-color: #263f60;
-            border-radius: 4rem;
-        }
-
-        .bookopen{
-            position: relative;
-            width: 50%;
-            img{
-                position: absolute;
-                top: -4rem;
-                left: 6%;
-                width: 40rem;
-            }
-        }
-        .TEST{
-            width: 50%;
-            color: var(--white);
-            height: 30rem;
-
-            h1{
-                font-size: clamp(2rem, 2vw, 5rem);
-            }
-        }
-    </style>
-
 </head>
 <body>
     <!--Cabeçalho de navegação-->
@@ -84,7 +54,7 @@
         <section class="first-container" id="home">
             <div class="first-content">
                 <h1 class="intro-title">Descubra Livros de Todos os Tipos</h1>
-                <p class="intro-subtitle">Sua próxima aventura literária aqui !</p>
+                <p class="intro-subtitle">Aguardando sua próxima aventura literária !</p>
             </div>
             <!--Tag de video para o background, caso não haja video a imagem no 'poster' vai aparecer-->
             <video autoplay muted loop playsinline poster="/Frontend/static/background-image.png" class="background-video">
@@ -103,14 +73,136 @@
             </div>
         </section>
 
+        <section class="carousel">
+            <div class="carousel-section">
+                <div class="carousel-wrapper">
+                    <!-- Duna -->
+                    <div class="carousel-item">
+                        <div class="book-cover-only">
+                            <img src="https://m.media-amazon.com/images/I/81zN7udGRUL._UF1000,1000_QL80_.jpg" alt="Capa do livro Duna">
+                        </div>
+                        <div class="book-highlight-content">
+                            <div class="book-cover-large">
+                                <img src="https://m.media-amazon.com/images/I/81zN7udGRUL._UF1000,1000_QL80_.jpg" alt="Capa do livro Duna">
+                            </div>
+                            <div class="highlight-info">
+                                <p class="author">FRANK HERBERT</p>
+                                <h1 style="font-family: 'DUNE';">DUNA</h1>
+                                <p class="synopsis">Descubra épicos de ficção científica que mudaram o gênero, ambientado em um futuro distante e complexo.</p>
+                                <button>Ler Agora</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Neuromancer -->
+                    <div class="carousel-item">
+                        <div class="book-cover-only">
+                            <img src="https://m.media-amazon.com/images/I/91Bx5ilP+EL.jpg" alt="Capa do livro Neuromancer">
+                        </div>
+                        <div class="book-highlight-content">
+                            <div class="book-cover-large">
+                                <img src="https://m.media-amazon.com/images/I/91Bx5ilP+EL.jpg" alt="Capa do livro Neuromancer">
+                            </div>
+                            <div class="highlight-info">
+                                <p class="author">WILLIAM GIBSON</p>
+                                <h1 style="font-family: 'NEURO';letter-spacing: 5px;">NEUROMANCER</h1>
+                                <p class="synopsis">Um marco da ficção cyberpunk, mergulhe em um mundo de hackers, inteligências artificiais e megacorporações.</p>
+                                <button>Ler Agora</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Blade Runner -->
+                    <div class="carousel-item">
+                        <div class="book-cover-only">
+                            <img src="https://editoraaleph.com.br/cdn/shop/files/capas_site_700x1000_BladeRunner.png" alt="Capa do livro Blade Runner">
+                        </div>
+                        <div class="book-highlight-content">
+                            <div class="book-cover-large">
+                                <img src="https://editoraaleph.com.br/cdn/shop/files/capas_site_700x1000_BladeRunner.png" alt="Capa do livro Blade Runner">
+                            </div>
+                            <div class="highlight-info">
+                                <p class="author">PHILIP K. DICK</p>
+                                <h1 style="font-family: 'RUNNER';font-weight: 100;">BLADE RUNNER</h1>
+                                <p class="synopsis">Androides em busca de vida em uma Terra pós-apocalíptica. Uma reflexão profunda sobre o que significa ser humano.</p>
+                                <button>Ler Agora</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- As Crônicas de Gelo e Fogo -->
+                    <div class="carousel-item">
+                        <div class="book-cover-only">
+                            <img src="https://m.media-amazon.com/images/I/91+1SUO3vUL._UF1000,1000_QL80_.jpg" alt="Capa do livro Gelo e Fogo">
+                        </div>
+                        <div class="book-highlight-content">
+                            <div class="book-cover-large">
+                                <img src="https://m.media-amazon.com/images/I/91+1SUO3vUL._UF1000,1000_QL80_.jpg" alt="Capa do livro Gelo e Fogo">
+                            </div>
+                            <div class="highlight-info">
+                                <p class="author">GEORGE R.R. MARTIN</p>
+                                <h1 style="font-family: 'GOT'; font-size: 1.8rem;">AS CRÔNICAS DE GELO E FOGO</h1>
+                                <p class="synopsis">A épica saga de fantasia que cativou o mundo, cheia de intrigas, dragões e batalhas por poder.</p>
+                                <button>Ler Agora</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- O Senhor dos Anéis -->
+                    <div class="carousel-item">
+                        <div class="book-cover-only">
+                            <img src="https://m.media-amazon.com/images/I/81hCVEC0ExL._UF1000,1000_QL80_.jpg" alt="Capa do livro O Senhor dos Anéis">
+                        </div>
+                        <div class="book-highlight-content">
+                            <div class="book-cover-large">
+                                <img src="https://m.media-amazon.com/images/I/81hCVEC0ExL._UF1000,1000_QL80_.jpg" alt="Capa do livro O Senhor dos Anéis">
+                            </div>
+                            <div class="highlight-info">
+                                <p class="author">J.R.R. TOLKIEN</p>
+                                <h1 style="font-family: 'RING'; font-size: 1.8rem;">O SENHOR DOS ANÉIS</h1>
+                                <p class="synopsis">Uma aventura inesquecível em um mundo de fantasia, com elfos, anões, hobbits e o anel do poder.</p>
+                                <button>Ler Agora</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-button prev" onclick="prevBook()"><i class="bi bi-caret-left"></i></button>
+                <button class="carousel-button next" onclick="nextBook()"><i class="bi bi-caret-right"></i></button>
+            </div>
+        </section>
+
         <section class="second-container">
             <div class="second-content">
                 <div class="bookopen">
                     <img src="/Frontend/static/book.png" alt="book">
                 </div>
 
-                <div class="TEST">
-                    <h1>TituloEx</h1>
+                <div class="textcontent">
+                    <h1>Titulo</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit placeat rem iure voluptates vel aperiam. 
+                        Sunt soluta officia quidem dolorem.Numquam vero ipsum praesentium dicta veniam 
+                        rem ratione molestias mollitia. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, maiores atque! 
+                        Amet nobis quidem vitae molestiae. Sunt eligendi minus totam voluptatem doloribus non reiciendis quod dignissimos ad!
+                        Fugiat, quibusdam minima.
+                    </p>
+                    <a href="">Saiba mais</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="third-container">
+            <div class="third-content">
+                <div class="box">
+                    <div class="box-bg"></div>
+                    <h1>Populares</h1>
+                </div>
+                <div class="box">
+                    <div class="box-bg"></div>
+                    <h1>Sagas & Séries</h1>
+                </div>
+                <div class="box">
+                    <div class="box-bg"></div>
+                    <h1>Recomendados</h1>
                 </div>
             </div>
         </section>
@@ -126,6 +218,7 @@
                 gravity: "top",
                 position: "right",
                 backgroundColor: "#303F55",
+                boxShadow:"none",
             }).showToast();
         }
     </script>

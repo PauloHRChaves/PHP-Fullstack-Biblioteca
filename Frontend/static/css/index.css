@@ -43,14 +43,14 @@ main::-webkit-scrollbar-thumb {
     border-radius: var(--radius);
 
     .first-content {
-        max-width: 40dvw;
+        max-width: 50dvw;
         z-index: 1;
     }
 
     .intro-title {
         font-family: "Work Sans", sans-serif;
         font-weight: 600;
-        font-size: clamp(2.5rem, 4vw, 8rem);
+        font-size: clamp(2.5rem, 4vw, 15rem);
         font-weight: 700;
         background: linear-gradient(135deg, var(--white) 30%, var(--secundary) 180%);
         -webkit-background-clip: text;
@@ -83,11 +83,12 @@ main::-webkit-scrollbar-thumb {
             overflow: hidden;
             font-size: clamp(1rem, 1vw, 3rem);
             margin-bottom: 4rem;
+            transition: 0.2s ease-in;
         }
     
         .search-bar:focus-within {
             border-color: var(--white);
-            background-color: #ffffff24;
+            background-color: var(--dark-background);
         }
     
         .search-bar i {
@@ -101,15 +102,13 @@ main::-webkit-scrollbar-thumb {
             background: transparent;
             border: none;
             outline: none;
-            color: var(--second-orange);
-            text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.529);
+            color: var(--white);
             font-size: clamp(1rem, 1vw, 3rem);
         }
     
         .search-bar input::placeholder {
             color: var(--white);
             font-weight: 200;
-            text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.529);
         }
     }
 }
@@ -130,7 +129,109 @@ main::-webkit-scrollbar-thumb {
         z-index: -1;
     }
 }
+
+/*  */
 .second-container{
-    min-height: 100vh;
+    margin-top: 1.5rem;
+
+    .second-content{
+        display: flex;
+        background: linear-gradient(to left, #192c45,#0F141B);
+        height: fit-content;
+        border: 2px solid transparent;
+        border-image: linear-gradient(to right, #ffffff00,#ffffff72) 1;
+        gap: 1rem;
+
+        .bookopen{
+            position: relative;
+            margin-left: 5%;
+            min-height: 40vh;
+            width: 40%;
+            img{
+                position: absolute;
+                top: -2rem;
+                left: 5%;
+                width: 85%;
+                height: 100%;
+            }
+        }
+        .textcontent{
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            color: var(--white);
+
+            h1{
+                font-size: clamp(2rem, 2vw, 9rem);
+                margin: 1.5rem 0;
+            }
+            p{
+                font-size: clamp(1rem, 1vw, 8rem);
+                text-align: justify;
+                margin-bottom: 3rem;
+            }
+            a{
+                font-size: clamp(0.8rem, 1vw, 7.2rem);
+                text-decoration: none;
+                color: var(--white);
+                background-color: var(--primary);
+                padding: 0.5rem 1rem;
+                font-weight: 600;
+                border-radius: clamp(0.2rem, 0.5vw, 1rem);
+                margin-bottom: 2rem;
+                align-self: start;
+            }
+        }
+    }
 }
 
+/*  */
+.third-container {
+    margin-top: 1.5rem;
+
+    .third-content {
+        background-color: var(--second-background);
+        padding: 1dvw 2dvh;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1dvw;
+        height: clamp(400px, 14vw, 1000px);
+
+        .box {
+            position: relative;
+            display: flex;
+            align-items: center; 
+            justify-content: center;
+            color: var(--white);
+            
+            flex: 1 1 calc(25% - 1dvw);
+            box-sizing: border-box;
+            border-radius: 1rem;
+            overflow: hidden;
+
+            h1{z-index: 3;}
+        }
+
+        .box-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-position: center;
+            background-size: cover;
+        }
+
+        .box-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            cursor: pointer;
+        }
+    }
+}
