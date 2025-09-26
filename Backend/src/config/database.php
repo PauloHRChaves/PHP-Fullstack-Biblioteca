@@ -13,6 +13,7 @@ function connectToDatabase(): PDO
         $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
         return $pdo;
+        
     } catch (PDOException $e) {
         error_log("Erro de conexão com o banco de dados: " . $e->getMessage());
         throw $e;
